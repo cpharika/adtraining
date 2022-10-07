@@ -104,7 +104,7 @@
 									"referenceName": "genericcsv",
 									"type": "DatasetReference",
 									"parameters": {
-										"filename": "[11:55] Mallikarjuna Reddy Boreddy @concat(item().table_schema,'_',item().table_name,'.csv')"
+										"filename": "[11:55] M@concat(item().table_schema,'_',item().table_name,'.csv')"
 									}
 								}
 							]
