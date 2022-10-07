@@ -1,0 +1,9 @@
+{
+	"name": "harika123",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ab7c2a93-791f-4e08-88ac-156344f7ff77",
+		"tenantId": "979ffdff-332b-406c-8644-6d8db569225f"
+	}
+}
