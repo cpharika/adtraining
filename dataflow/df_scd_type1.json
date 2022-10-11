@@ -89,7 +89,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup",
-				"lookup derive(inserteddate1 = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),",
+				"lookup derive(inserteddate = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),",
 				"          modifieddate = currentTimestamp()) ~> setdates",
 				"setdates alterRow(upsertIf(true())) ~> upsert",
 				"upsert sink(allowSchemaDrift: true,",
@@ -130,7 +130,7 @@
 				"          EmailAddress = customersource@EmailAddress,",
 				"          Phone = customersource@Phone,",
 				"          InsertedDate,",
-				"          ModifiedDate = dimcustomer@ModifiedDate,",
+				"          ModifiedDate,",
 				"          HashKey = createhashkey@hashkey",
 				"     )) ~> sinktarget"
 			]
