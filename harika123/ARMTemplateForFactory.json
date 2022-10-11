@@ -151,6 +151,197 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_scdtype1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "scd1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow_scd",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"customersource": {},
+									"dimcustomer": {},
+									"sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow_scd')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/customersource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_EDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "CustomerSource"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_EDW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dimcustomer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_EDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "HashKey",
+						"type": "char"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "CustomerSink"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_EDW')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/genericcsv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -337,149 +528,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/customersource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SQL_EDW",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Title",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Suffix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Phone",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "CustomerSource"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_EDW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dimcustomer')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SQL_EDW",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Title",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Suffix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Phone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "InsertedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "HashKey",
-						"type": "char"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "CustomerSink"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_EDW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_scd_type1')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow_scd')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -507,7 +556,7 @@
 								"referenceName": "dimcustomer",
 								"type": "DatasetReference"
 							},
-							"name": "sinktarget"
+							"name": "sink"
 						}
 					],
 					"transformations": [
@@ -515,7 +564,7 @@
 							"name": "createhashkey"
 						},
 						{
-							"name": "exists1"
+							"name": "exist"
 						},
 						{
 							"name": "lookup"
@@ -563,16 +612,16 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> dimcustomer",
-						"customersource derive(hashkey = sha2(256, iifNull(Title,'') +FirstName +iifNull(MiddleName,'') +iifNull(LastName,'') +iifNull(Suffix,'') +iifNull(CompanyName,'') +iifNull(SalesPerson,'') +iifNull(EmailAddress,'') +iifNull(Phone,''))) ~> createhashkey",
-						"createhashkey, dimcustomer exists(createhashkey@hashkey == dimcustomer@HashKey,",
+						"customersource derive(Hashkey = sha2(256, iifNull(Title,'') +iifNull(FirstName,'') +iifNull(MiddleName,'') +iifNull(LastName,'') +iifNull(Suffix,'') +iifNull(CompanyName,'') +iifNull(SalesPerson,'') +iifNull(EmailAddress,'') +iifNull(Phone,''))) ~> createhashkey",
+						"createhashkey, dimcustomer exists(createhashkey@Hashkey == dimcustomer@HashKey,",
 						"     negate:true,",
-						"     broadcast: 'auto')~> exists1",
-						"exists1, dimcustomer lookup(customersource@CustomerID == dimcustomer@CustomerID,",
+						"     broadcast: 'auto')~> exist",
+						"exist, dimcustomer lookup(customersource@CustomerID == dimcustomer@CustomerID,",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookup",
-						"lookup derive(inserteddate1 = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),",
-						"          modifieddate = currentTimestamp()) ~> setdates",
+						"lookup derive(InsertedDate = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),",
+						"          ModifiedDate = currentTimestamp()) ~> setdates",
 						"setdates alterRow(upsertIf(true())) ~> upsert",
 						"upsert sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -612,9 +661,9 @@
 						"          EmailAddress = customersource@EmailAddress,",
 						"          Phone = customersource@Phone,",
 						"          InsertedDate,",
-						"          ModifiedDate = dimcustomer@ModifiedDate,",
-						"          HashKey = createhashkey@hashkey",
-						"     )) ~> sinktarget"
+						"          ModifiedDate,",
+						"          HashKey = createhashkey@Hashkey",
+						"     )) ~> sink"
 					]
 				}
 			},
@@ -624,13 +673,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_scdtype1')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "scd1",
+						"name": "Data flow_scd",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -643,13 +692,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "df_scd_type1",
+								"referenceName": "dataflow_scd",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
 									"customersource": {},
 									"dimcustomer": {},
-									"sinktarget": {}
+									"sink": {}
 								}
 							},
 							"staging": {},
@@ -669,7 +718,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
-				"[concat(variables('factoryId'), '/dataflows/df_scd_type1')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow_scd')]"
 			]
 		}
 	]
